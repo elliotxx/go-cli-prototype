@@ -8,28 +8,22 @@ default:
 
 build-all: build-darwin build-linux build-windows
 
-build-darwin:
+build-darwin: gen-version
 	-rm -rf ./build/darwin/bin
-	# Update version
-	cd pkg/version/scripts && go run gen.go
 	# Build kusion
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/darwin/bin/$(APP_NAME) \
 		./cmd/main.go
 
-build-linux:
+build-linux: gen-version
 	-rm -rf ./build/linux/bin
-	# Update version
-	cd pkg/version/scripts && go run gen.go
 	# Build kusion
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/linux/bin/$(APP_NAME) \
 		./cmd/main.go
 
-build-windows:
+build-windows: gen-version
 	-rm -rf ./build/windows/bin
-	# Update version
-	cd pkg/version/scripts && go run gen.go
 	# Build kusion
 	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/windows/bin/$(APP_NAME).exe \
