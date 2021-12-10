@@ -16,7 +16,7 @@ func main() {
 
 	data := make_update_version_go_file(versionInfo)
 
-	err = ioutil.WriteFile("../z_update_version.go", []byte(data), 0666)
+	err = ioutil.WriteFile("../z_update_version.go", []byte(data), 0o666)
 	if err != nil {
 		log.Fatalf("ioutil.WriteFile: err = %v", err)
 	}
