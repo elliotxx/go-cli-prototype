@@ -1,10 +1,25 @@
 # Default variable
-GOIMPORTS ?= goimports
-GOCILINT ?= golangci-lint
-APP_NAME ?= go-cli-prototype
+GOFORMATER 	?= goimports
+GOCILINT 	?= golangci-lint
+APP_NAME 	?= go-cli-prototype
 
 default:
 	@go run cmd/main.go
+
+format:
+	@$(GOFORMATER) -l -w .
+
+test:
+	@go test -timeout=10m `go list ./pkg/... ./cmd/...`
+
+test-with-coverage:
+	@go test -v -coverprofile=profile.cov -timeout=10m `go list ./pkg/... ./cmd/...`
+
+lint:
+	@$(GOCILINT) run --no-config --disable=errcheck ./...
+
+gen-version: # Update version
+	cd pkg/version/scripts && go run gen.go
 
 build-all: build-darwin build-linux build-windows
 
@@ -28,15 +43,3 @@ build-windows: gen-version
 	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/windows/bin/$(APP_NAME).exe \
 		./cmd/main.go
-
-test:
-	@go test -timeout=10m `go list ./pkg/... ./cmd/...`
-
-test-with-coverage:
-	@go test -v -coverprofile=profile.cov -timeout=10m `go list ./pkg/... ./cmd/...`
-
-lint:
-	@$(GOCILINT) run --no-config --disable=errcheck ./...
-
-gen-version: # Update version
-	cd pkg/version/scripts && go run gen.go
