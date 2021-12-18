@@ -10,10 +10,10 @@ format:
 	@$(GOFORMATER) -l -w .
 
 test:
-	@go test -timeout=10m `go list ./pkg/... ./cmd/...`
+	@go test -timeout=10m `go list ./... | grep -v /vendor/`
 
 test-with-coverage:
-	@go test -v -coverprofile=profile.cov -timeout=10m `go list ./pkg/... ./cmd/...`
+	@go test -v -coverprofile=profile.cov -timeout=10m `go list ./... | grep -v /vendor/`
 
 lint:
 	@$(GOCILINT) run --no-config --disable=errcheck ./...
