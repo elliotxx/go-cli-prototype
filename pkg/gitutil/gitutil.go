@@ -10,7 +10,7 @@ import (
 // https://github.com/vivin/better-setuptools-git-version/blob/master/better_setuptools_git_version.py
 
 // get remote url
-func GetRemoteUrl() (string, error) {
+func GetRemoteURL() (string, error) {
 	stdout, err := exec.Command(
 		"git", "config", "--get", "remote.origin.url",
 	).CombinedOutput()
@@ -32,14 +32,14 @@ func GetLatestTag() (string, error) {
 // the fitting git clone depth is 1
 func GetLatestTagFromRemote() (tag string, err error) {
 	// get remote url
-	remoteUrl, err := GetRemoteUrl()
+	remoteURL, err := GetRemoteURL()
 	if err != nil {
 		return "", err
 	}
 
 	// get latest tag from remote
 	stdout, err := exec.Command(
-		`bash`, `-c`, `git ls-remote --tags --sort=v:refname `+remoteUrl+` | tail -n1 | sed 's/.*\///; s/\^{}//'`,
+		`bash`, `-c`, `git ls-remote --tags --sort=v:refname `+remoteURL+` | tail -n1 | sed 's/.*\///; s/\^{}//'`,
 	).CombinedOutput()
 	if err != nil {
 		return "", err
@@ -135,13 +135,13 @@ func GetTagCommitShaFromLocal(tag string) (sha string, err error) {
 // the fitting git clone depth is 1
 func GetTagCommitShaFromRemote(tag string) (string, error) {
 	// get remote url
-	remoteUrl, err := GetRemoteUrl()
+	remoteURL, err := GetRemoteURL()
 	if err != nil {
 		return "", err
 	}
 	// git ls-remote --tags --sort=v:refname git@xxx:xxx/xxx.git | tail -n1 | awk '{print $1}'
 	stdout, err := exec.Command(
-		`bash`, `-c`, `git ls-remote --tags --sort=v:refname `+remoteUrl+` | tail -n1 | awk '{print $1}'`,
+		`bash`, `-c`, `git ls-remote --tags --sort=v:refname `+remoteURL+` | tail -n1 | awk '{print $1}'`,
 	).CombinedOutput()
 	if err != nil {
 		return "", err

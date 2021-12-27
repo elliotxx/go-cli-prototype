@@ -106,14 +106,14 @@ func NewVersionInfo() (*VersionInfo, error) {
 }
 
 func (v *VersionInfo) String() string {
-	return v.Yaml()
+	return v.YAML()
 }
 
 func (v *VersionInfo) ShortString() string {
 	return fmt.Sprintf("%s; git: %s; build time: %s", v.ReleaseVersion, v.GitCommit, v.BuildTime)
 }
 
-func (v *VersionInfo) Json() string {
+func (v *VersionInfo) JSON() string {
 	data, err := json.MarshalIndent(v, "", "    ")
 	if err != nil {
 		return ""
@@ -121,7 +121,7 @@ func (v *VersionInfo) Json() string {
 	return string(data)
 }
 
-func (v *VersionInfo) Yaml() string {
+func (v *VersionInfo) YAML() string {
 	data, err := yaml.Marshal(v)
 	if err != nil {
 		return ""

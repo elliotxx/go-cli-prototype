@@ -20,14 +20,14 @@ var (
 		go-cli-prototype -e "hello world"`))
 )
 
-type MainOptions struct {
+type Options struct {
 	ShowVersion bool
 	Echo        string
 }
 
 // NewEncryptOptions returns a new EncryptOptions instance
-func NewMainOptions() *MainOptions {
-	return &MainOptions{}
+func NewMainOptions() *Options {
+	return &Options{}
 }
 
 func configureCLI() *cobra.Command {
