@@ -27,11 +27,11 @@ jobs:
     - name: Running go tests with coverage
       env:
         GO111MODULE: on
-      run: make test-with-coverage
+      run: make cover
     - name: Send coverage
       uses: shogo82148/actions-goveralls@v1
       with:
-        path-to-profile: profile.cov
+        path-to-profile: cover.out
   lint:
     name: Lint checks
     runs-on: ubuntu-latest
@@ -45,10 +45,10 @@ jobs:
         uses: actions/checkout@master
       - name: Download golangci-lint
         run: |
-          wget https://github.com/golangci/golangci-lint/releases/download/v1.31.0/golangci-lint-1.31.0-linux-amd64.tar.gz
-          tar -xvf ./golangci-lint-1.31.0-linux-amd64.tar.gz
+          wget https://github.com/golangci/golangci-lint/releases/download/v1.41.0/golangci-lint-1.41.0-linux-amd64.tar.gz
+          tar -xvf ./golangci-lint-1.41.0-linux-amd64.tar.gz
       - name: Running golangci-lint
         env:
           GO111MODULE: on
           GOPATH: /home/runner/work/
-        run: GOCILINT=./golangci-lint-1.31.0-linux-amd64/golangci-lint make lint
+        run: GOLINTER=./golangci-lint-1.41.0-linux-amd64/golangci-lint make lint
