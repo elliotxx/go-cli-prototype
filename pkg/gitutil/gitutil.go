@@ -17,6 +17,7 @@ func GetRemoteURL() (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return strings.TrimSpace(string(stdout)), nil
 }
 
@@ -25,6 +26,7 @@ func GetLatestTag() (string, error) {
 	if tag == "" || err != nil {
 		return GetLatestTagFromRemote()
 	}
+
 	return tag, nil
 }
 
@@ -44,6 +46,7 @@ func GetLatestTagFromRemote() (tag string, err error) {
 	if err != nil {
 		return "", err
 	}
+
 	return strings.TrimSpace(string(stdout)), nil
 }
 
@@ -52,9 +55,11 @@ func GetLatestTagFromLocal() (tag string, err error) {
 	if err != nil {
 		return "", err
 	}
+
 	if len(tags) > 0 {
 		tag = tags[len(tags)-1]
 	}
+
 	return strings.TrimSpace(tag), nil
 }
 
@@ -72,6 +77,7 @@ func GetTagList() (tags []string, err error) {
 			tags = append(tags, s)
 		}
 	}
+
 	return
 }
 
@@ -85,6 +91,7 @@ func GetHeadHash() (sha string, err error) {
 	}
 
 	sha = strings.TrimSpace(string(stdout))
+
 	return
 }
 
@@ -93,9 +100,11 @@ func GetHeadHashShort() (sha string, err error) {
 	if err != nil {
 		return "", err
 	}
+
 	if len(sha) > 8 {
 		sha = sha[:8]
 	}
+
 	return
 }
 
@@ -108,6 +117,7 @@ func GetTagCommitSha(tag string) (sha string, err error) {
 	if sha == "" || err != nil {
 		return GetTagCommitShaFromRemote(tag)
 	}
+
 	return
 }
 
@@ -119,15 +129,19 @@ func GetTagCommitShaFromLocal(tag string) (sha string, err error) {
 	if err != nil {
 		return "", err
 	}
-	var lines []string
+
+	lines := []string{}
+
 	for _, s := range strings.Split(strings.TrimSpace(string(stdout)), "\n") {
-		if s := strings.TrimSpace(s); s != "" {
+		if strings.TrimSpace(s) != "" {
 			lines = append(lines, s)
 		}
 	}
+
 	if len(lines) > 0 {
 		sha = lines[len(lines)-1]
 	}
+
 	return strings.TrimSpace(sha), nil
 }
 
@@ -146,6 +160,7 @@ func GetTagCommitShaFromRemote(tag string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return strings.TrimSpace(string(stdout)), nil
 }
 
@@ -153,14 +168,17 @@ func IsHeadAtTag(tag string) (bool, error) {
 	if tag == "" {
 		return false, fmt.Errorf("gitutil.IsHeadAtTag: empty tag")
 	}
+
 	sha1, err1 := GetTagCommitSha(tag)
 	if err1 != nil {
 		return false, err1
 	}
+
 	sha2, err2 := GetHeadHash()
 	if err2 != nil {
 		return false, err2
 	}
+
 	return sha1 == sha2, nil
 }
 
@@ -174,5 +192,6 @@ func IsDirty() (dirty bool, err error) {
 	}
 
 	dirty = strings.TrimSpace(string(stdout)) != ""
+
 	return
 }

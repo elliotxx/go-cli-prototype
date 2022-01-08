@@ -54,6 +54,7 @@ func configureCLI() *cobra.Command {
 
 	rootCmd.Flags().BoolVarP(&o.ShowVersion, "version", "V", false, "Show version info")
 	rootCmd.Flags().StringVarP(&o.Echo, "echo", "e", "", "Show echo info")
+
 	return rootCmd
 }
 

@@ -29,8 +29,8 @@ linters:
     - exhaustive
     - goconst
     - gocritic
-    - gomnd
-    - gosec
+    # - gomnd
+    # - gosec
     - misspell
     - nolintlint
     - prealloc
