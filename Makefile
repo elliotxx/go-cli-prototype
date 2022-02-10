@@ -1,4 +1,4 @@
-GOSOURCE_PATHS		?= ./pkg/... ./cmd/...
+GOSOURCE_PATHS ?= ./pkg/... ./cmd/...
 
 include go.makefile
 
@@ -17,7 +17,6 @@ build-all: build-darwin build-linux build-windows ## Build all platforms
 .PHONY: build-darwin
 build-darwin: gen-version ## Build for MacOS
 	-rm -rf ./build/darwin
-	# Build kusion
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/darwin/$(APPROOT) \
 		./cmd/main.go
@@ -25,7 +24,6 @@ build-darwin: gen-version ## Build for MacOS
 .PHONY: build-linux
 build-linux: gen-version ## Build for Linux
 	-rm -rf ./build/linux
-	# Build kusion
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/linux/$(APPROOT) \
 		./cmd/main.go
@@ -33,7 +31,6 @@ build-linux: gen-version ## Build for Linux
 .PHONY: build-windows
 build-windows: gen-version ## Build for Windows
 	-rm -rf ./build/windows
-	# Build kusion
 	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 \
 		go build -o ./build/windows/$(APPROOT).exe \
 		./cmd/main.go
