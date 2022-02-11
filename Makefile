@@ -1,6 +1,6 @@
 GOSOURCE_PATHS ?= ./pkg/... ./cmd/...
 
-include go.makefile
+include go.mk
 
 
 .PHONY: gen-version
