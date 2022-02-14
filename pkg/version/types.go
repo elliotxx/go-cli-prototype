@@ -13,38 +13,60 @@ import (
 
 	goversion "github.com/hashicorp/go-version"
 
-	git "github.com/elliotxx/go-cli-prototype/pkg/gitutil"
+	git "github.com/elliotxx/gulu/gitutil"
 )
 
-var versionInfo *Info
+var info = &Info{
+	ReleaseVersion: "default-version",
+	GitInfo: &GitInfo{
+		LatestTag: "default-tag",
+		Commit:    "default-commit",
+		TreeState: "default-tree-state",
+	},
+	BuildInfo: &BuildInfo{
+		GoVersion: runtime.Version(),
+		GOOS:      runtime.GOOS,
+		GOARCH:    runtime.GOARCH,
+		NumCPU:    runtime.NumCPU(),
+		Compiler:  runtime.Compiler,
+		BuildTime: time.Now().Format("2006-01-02 15:04:05"),
+	},
+}
 
 // Info contains versioning information.
 // following attributes:
 //
 //    ReleaseVersion - "vX.Y.Z-00000000" used to indicate the last release version,
 // 		  containing GitVersion and GitCommitShort.
-//    GitVersion - "vX.Y.Z" used to indicate the last git tag.
+type Info struct {
+	ReleaseVersion string     `json:"releaseVersion" yaml:"releaseVersion"` // Such as "v1.2.3-3836f877"
+	GitInfo        *GitInfo   `json:"gitInfo,omitempty" yaml:"gitInfo,omitempty"`
+	BuildInfo      *BuildInfo `json:"buildInfo,omitempty" yaml:"buildInfo,omitempty"`
+}
+
+// GitInfo contains git information.
+// following attributes:
+//
+//    GitLatestTag - "vX.Y.Z" used to indicate the last git tag.
 //    GitCommit - The git commit id corresponding to this source code.
 //    GitTreeState - "clean" indicates no changes since the git commit id
 //        "dirty" indicates source code changes after the git commit id
-type Info struct {
-	ReleaseVersion string      `json:"releaseVersion" yaml:"releaseVersion"`                 // Such as "v1.2.3-3836f877"
-	GitVersion     string      `json:"gitVersion" yaml:"gitVersion"`                         // Such as "v1.2.3"
-	GitCommit      string      `json:"gitCommit" yaml:"gitCommit"`                           // Such as "3836f8770ab8f488356b2129f42f2ae5c1134bb0"
-	GitTreeState   string      `json:"gitTreeState,omitempty" yaml:"gitTreeState,omitempty"` // Such as "clean", "dirty"
-	BuildTime      string      `json:"buildTime" yaml:"buildTime"`                           // Such as "2021-10-20 18:24:03"
-	Runtime        RuntimeInfo `json:"runtime,omitempty" yaml:"runtime,omitempty"`
+type GitInfo struct {
+	LatestTag string `json:"latestTag" yaml:"latestTag"`                     // Such as "v1.2.3"
+	Commit    string `json:"commit,omitempty" yaml:"commit,omitempty"`       // Such as "3836f8770ab8f488356b2129f42f2ae5c1134bb0"
+	TreeState string `json:"treeState,omitempty" yaml:"treeState,omitempty"` // Such as "clean", "dirty"
 }
 
-type RuntimeInfo struct {
+type BuildInfo struct {
 	GoVersion string `json:"goVersion,omitempty" yaml:"goVersion,omitempty"`
 	GOOS      string `json:"GOOS,omitempty" yaml:"GOOS,omitempty"`
 	GOARCH    string `json:"GOARCH,omitempty" yaml:"GOARCH,omitempty"`
 	NumCPU    int    `json:"numCPU,omitempty" yaml:"numCPU,omitempty"`
 	Compiler  string `json:"compiler,omitempty" yaml:"compiler,omitempty"`
+	BuildTime string `json:"buildTime,omitempty" yaml:"buildTime,omitempty"` // Such as "2021-10-20 18:24:03"
 }
 
-func NewVersionInfo() (*Info, error) {
+func NewInfo() (*Info, error) {
 	var (
 		isHeadAtTag    bool
 		headHash       string
@@ -98,16 +120,18 @@ func NewVersionInfo() (*Info, error) {
 
 	return &Info{
 		ReleaseVersion: releaseVersion,
-		GitVersion:     gitVersion.Original(),
-		GitCommit:      headHash,
-		GitTreeState:   gitTreeState,
-		BuildTime:      time.Now().Format("2006-01-02 15:04:05"),
-		Runtime: RuntimeInfo{
+		GitInfo: &GitInfo{
+			LatestTag: gitVersion.Original(),
+			Commit:    headHash,
+			TreeState: gitTreeState,
+		},
+		BuildInfo: &BuildInfo{
 			GoVersion: runtime.Version(),
 			GOOS:      runtime.GOOS,
 			GOARCH:    runtime.GOARCH,
 			NumCPU:    runtime.NumCPU(),
 			Compiler:  runtime.Compiler,
+			BuildTime: time.Now().Format("2006-01-02 15:04:05"),
 		},
 	}, nil
 }
@@ -117,7 +141,7 @@ func (v *Info) String() string {
 }
 
 func (v *Info) ShortString() string {
-	return fmt.Sprintf("%s; git: %s; build time: %s", v.ReleaseVersion, v.GitCommit, v.BuildTime)
+	return fmt.Sprintf("%s; git: %s; build time: %s", v.ReleaseVersion, v.GitInfo.Commit, v.BuildInfo.BuildTime)
 }
 
 func (v *Info) JSON() string {

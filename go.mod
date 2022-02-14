@@ -3,6 +3,7 @@ module github.com/elliotxx/go-cli-prototype
 go 1.16
 
 require (
+	github.com/elliotxx/gulu v0.3.1
 	github.com/go-logr/logr v1.2.1 // indirect
 	github.com/hashicorp/go-version v1.3.0
 	github.com/spf13/cobra v1.2.1

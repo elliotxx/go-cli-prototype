@@ -1,21 +1,21 @@
 package version
 
 func ReleaseVersion() string {
-	return versionInfo.ReleaseVersion
+	return info.ReleaseVersion
 }
 
 func String() string {
-	return versionInfo.String()
+	return info.String()
 }
 
 func ShortString() string {
-	return versionInfo.ShortString()
+	return info.ShortString()
 }
 
 func JSON() string {
-	return versionInfo.JSON()
+	return info.JSON()
 }
 
 func YAML() string {
-	return versionInfo.YAML()
+	return info.YAML()
 }
