@@ -35,14 +35,12 @@ release:
   github:
     owner: elliotxx
     name: go-cli-prototype
-  draft: true
-  prerelease: auto
-  discussion_category_name: General
-  header: |
-    ## Major changes
-    - Item 1
-    - Item 2
+  draft: false
   footer: |
+    ## Docker Images
+    * `elliotxx/go-cli-prototype:{{ .Tag }}`
+    * `elliotxx/go-cli-prototype:{{ .Tag }}-arm64`
+
     ## Thanks!
 
 dockers:
