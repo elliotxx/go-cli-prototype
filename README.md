@@ -8,6 +8,26 @@
 
 > This is a cli application with go and cobra.
 
+## Intallation
+### Homebrew
+
+The `elliotxx/tap` has macOS and GNU/Linux pre-built binaries available:
+
+```
+brew install elliotxx/tap/go-cli-prototype
+```
+
+### Build from Source
+
+Starting with Go 1.17, you can install `go-cli-prototype` from source using go install:
+
+```
+go install github.com/elliotxx/go-cli-prototype/cmd@latest
+```
+
+*NOTE*: This will install `go-cli-prototype` based on the latest available code base. Even though the goal is that the latest commit on the main branch should always be a stable and usable version, this is not the recommended way to install and use `go-cli-prototype`. The version output will show `go-cli-prototype` version (default-version) for go install based builds.
+
+
 ## Usage
 Local startup:
 ```

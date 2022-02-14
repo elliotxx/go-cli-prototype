@@ -73,3 +73,26 @@ dockers:
   - "--label=org.opencontainers.image.source={{.GitURL}}"
   - "--platform=linux/arm64"
   goarch: arm64
+
+brews:
+  - tap:
+      owner: elliotxx
+      name: homebrew-tap
+      # token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+
+    url_template: "https://github.com/elliotxx/go-cli-prototype/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    download_strategy: CurlDownloadStrategy
+
+    # Git author used to commit to the repository.
+    # Defaults are shown.
+    commit_author:
+      name: GoReleaser Bot
+      email: goreleaser@carlosbecker.com
+
+    folder: HomebrewFormula
+    homepage: "https://github.com/elliotxx/go-cli-prototype"
+    description: "This is a cli application with go and cobra."
+    license: "MIT"
+    skip_upload: false
+    test: |
+      system "#{bin}/go-cli-prototype -V"
