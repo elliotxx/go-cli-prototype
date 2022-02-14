@@ -41,7 +41,7 @@ func configureCLI() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			// Show version info
 			if o.ShowVersion {
-				fmt.Println(version.ReleaseVersion())
+				fmt.Println(version.YAML())
 				return nil
 			}
 			if len(o.Echo) > 0 {
