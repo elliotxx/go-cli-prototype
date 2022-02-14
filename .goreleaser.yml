@@ -12,7 +12,7 @@ builds:
       - linux
       - windows
       - darwin
-    main: ./cmd/
+    main: ./cmd/go-cli-prototype
 archives:
   - replacements:
       darwin: Darwin
