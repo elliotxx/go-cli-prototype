@@ -32,6 +32,7 @@ func NewMainOptions() *Options {
 
 func configureCLI() *cobra.Command {
 	o := NewMainOptions()
+
 	rootCmd := &cobra.Command{
 		Use:          "go-cli-prototype",
 		Short:        cmdShort,
