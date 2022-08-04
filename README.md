@@ -22,6 +22,22 @@ The `elliotxx/tap` has macOS and GNU/Linux pre-built binaries available:
 brew install elliotxx/tap/go-cli-prototype
 ```
 
+### Script
+
+The `go-cli-prototype` can be installed on Linux and macOS with a small install script:
+
+```bash
+curl -sSf https://raw.githubusercontent.com/elliotxx/go-cli-prototype/master/scripts/install.sh | bash
+```
+
+Or
+
+```bash
+wget -qO- https://raw.githubusercontent.com/elliotxx/go-cli-prototype/master/scripts/install.sh | bash
+```
+
+Windows or otherwise interested users can download binaries directly from the GitHub Releases page.
+
 ### Build from Source
 
 Starting with Go 1.17, you can install `go-cli-prototype` from source using go install:

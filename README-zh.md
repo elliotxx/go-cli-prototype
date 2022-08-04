@@ -22,6 +22,22 @@
 brew install elliotxx/tap/go-cli-prototype
 ```
 
+### 脚本安装
+
+在 Linux 和 MacOS 环境中，`go-cli-prototype` 可以通过脚本一键安装：
+
+```bash
+curl -sSf https://raw.githubusercontent.com/elliotxx/go-cli-prototype/master/scripts/install.sh | bash
+```
+
+Or:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/elliotxx/go-cli-prototype/master/scripts/install.sh | bash
+```
+
+Windows 或者其它感兴趣的用户可以直接在 Github Release 页面中下载二进制文件。
+
 ### 从源码构建
 
 使用 Go 1.17+ 版本，你可以通过 `go install` 直接从源码安装 `go-cli-prototype`:
